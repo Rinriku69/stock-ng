@@ -9,21 +9,21 @@ interface ProductLists {
   providedIn: 'root',
 })
 export class ProductService {
-  products: ProductLists[] = [];
+  products: ProductLists[] = [
+    { name: 'Gaming Mouse', price: 1500 },
+    { name: 'Mechanical Keyboard', price: 3200 },
+    { name: 'Monitor 24"', price: 4500 },
+    { name: 'Mouse Pad', price: 300 },
+    { name: 'Pad thai', price: 200 }
+  ];
 
   getProduct() {
-    this.products = [
-      { name: 'Gaming Mouse', price: 1500 },
-      { name: 'Mechanical Keyboard', price: 3200 },
-      { name: 'Monitor 24"', price: 4500 },
-      { name: 'Mouse Pad', price: 300 },
-      { name: 'Pad thai', price: 200 }
-    ]
+
 
     return this.products
   }
 
-  addProduct(product: ProductList) {
+  addProduct(product: ProductLists) {
     this.products.push(product)
   }
 
