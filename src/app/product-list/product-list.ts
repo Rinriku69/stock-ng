@@ -1,32 +1,34 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ProductService } from '../service/product'
+import { AddProduct } from "../add-product/add-product";
 
-interface Product {
+interface ProductLists {
   name: string;
-  price: number;
+  price: number
 }
 
 @Component({
   selector: 'app-product-list',
-  imports: [CommonModule],
+  imports: [CommonModule, AddProduct],
   templateUrl: './product-list.html',
   styleUrl: './product-list.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProductList {
+  products: ProductLists[] = []
 
-  products: Product[] = [];
+  constructor(private productServices: ProductService) {
+    this.products = this.productServices.getProduct();
+
+  }
+  removeProduct(index: number) {
+    this.productServices.removeProduct(index);
+  }
 
   load() {
-    this.products = [
-      { name: 'Gaming Mouse', price: 1500 },
-      { name: 'Mechanical Keyboard', price: 3200 },
-      { name: 'Monitor 24"', price: 4500 },
-      { name: 'Mouse Pad', price: 300 }
-    ];
+    this.products = this.productServices.getProduct();
   }
 
-  removeProduct(index: number) {
-    this.products.splice(index, 1);
-  }
+
 }
