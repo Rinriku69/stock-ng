@@ -27,7 +27,7 @@ export class ProductList {
   }
 
   load() {
-    this.products = this.productServices.getProduct();
+    this.products = this.productServices.loadProduct();
   }
 
 
