@@ -1,11 +1,15 @@
 <div class="app-input-form">
   <label>
     Product name
-    <input type="text" [(ngModel)]="product_name" />
-  </label>
+    <input type="text" [(ngModel)]="product_name" /> </label
+  ><br />
   <label>
     Price
-    <input type="number" [(ngModel)]="product_price" />
+    <input type="number" [(ngModel)]="product_price" /> </label
+  ><br />
+  <label>
+    Quantity
+    <input type="number" [(ngModel)]="product_qty" />
   </label>
   <p>{{ product_name }}</p>
   <button type="button" (click)="addProduct()" [disabled]="!product_name">Add</button>

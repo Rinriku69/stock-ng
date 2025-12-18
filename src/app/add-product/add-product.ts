@@ -1,12 +1,8 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormsModule } from '@angular/forms'
 import { ProductService } from '../service/product'
-import { RouterLink } from '@angular/router';
-
-interface ProductLists {
-  name: string;
-  price: number
-}
+import { Router, RouterLink } from '@angular/router';
+import { ProductLists } from '../models/product';
 
 @Component({
   selector: 'app-add-product',
@@ -16,18 +12,21 @@ interface ProductLists {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AddProduct {
-  constructor(private productServices: ProductService) { }
+  constructor(private productServices: ProductService, private router: Router) { }
 
   product_name = '';
   product_price = 0;
+  product_qty = 0;
   product = {} as ProductLists
+
 
   addProduct() {
     this.product = {
       name: this.product_name,
-      price: this.product_price
+      price: this.product_price,
+      qty: this.product_qty,
     }
     this.productServices.addProduct(this.product);
-
+    this.router.navigate(['/product-list'])
   }
 }

@@ -1,21 +1,16 @@
 import { Injectable } from '@angular/core';
-
-
-interface ProductLists {
-  name: string;
-  price: number
-}
+import { ProductLists } from '../models/product';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProductService {
   products: ProductLists[] = this.loadFromStorage() || [
-    { name: 'Gaming Mouse', price: 1500 },
-    { name: 'Mechanical Keyboard', price: 3200 },
-    { name: 'Monitor 24"', price: 4500 },
-    { name: 'Mouse Pad', price: 300 },
-    { name: 'Pad thai', price: 200 }
+    { name: 'Gaming Mouse', price: 1500, qty: 10 },
+    { name: 'Mechanical Keyboard', price: 3200, qty: 10 },
+    { name: 'Monitor 24"', price: 4500, qty: 10 },
+    { name: 'Mouse Pad', price: 300, qty: 10 },
+    { name: 'Pad thai', price: 200, qty: 10 }
   ];
 
   private saveToStorage() {
@@ -44,11 +39,11 @@ export class ProductService {
 
   loadProduct() {
     this.products = [
-      { name: 'Gaming Mouse', price: 1500 },
-      { name: 'Mechanical Keyboard', price: 3200 },
-      { name: 'Monitor 24"', price: 4500 },
-      { name: 'Mouse Pad', price: 300 },
-      { name: 'Pad thai', price: 200 }
+      { name: 'Gaming Mouse', price: 1500, qty: 10 },
+      { name: 'Mechanical Keyboard', price: 3200, qty: 10 },
+      { name: 'Monitor 24"', price: 4500, qty: 10 },
+      { name: 'Mouse Pad', price: 300, qty: 10 },
+      { name: 'Pad thai', price: 200, qty: 10 }
     ];
     return this.products
   }

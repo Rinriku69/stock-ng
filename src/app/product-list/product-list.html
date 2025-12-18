@@ -1,9 +1,15 @@
 <h2>รายการสินค้าในสต็อก</h2>
 <button type="button" (click)="load()" [disabled]="products.length > 0">Load Product</button>
 <br />
+<h3>Total Product :{{ dashBoard().qty }} Total Price :{{ dashBoard().total }}</h3>
 <!-- <app-add-product></app-add-product> -->
 <div class="product-list">
-  @for (product of products; track product.name; let i = $index) {
+  <label
+    >Search
+    <input type="text" [(ngModel)]="search_key" (keyup)="products_list()" />
+  </label>
+  <p>{{ search_status }}</p>
+  @for (product of filteredProducts; track product.name; let i = $index) {
     <div class="product-card" style="margin-top: 20px; border: 1px solid #ddd; padding: 10px">
       <b
         >Product <span class="title-number">{{ i + 1 }}</span
@@ -11,10 +17,11 @@
       </b>
       <div class="product-name">{{ product.name }}</div>
       <div class="product-price">{{ product.price | number }} Baht</div>
+      <div class="product-qty">Quantity: {{ product.qty | number }}</div>
 
       <button type="button" (click)="removeProduct(i)">X</button>
     </div>
   } @empty {
-    <p>ไม่มีสินค้าในสต็อก</p>
+    <p>Not Found</p>
   }
 </div>
