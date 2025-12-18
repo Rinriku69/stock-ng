@@ -1,12 +1,12 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormsModule } from '@angular/forms'
 import { ProductService } from '../service/product'
-import { Router, RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 import { ProductLists } from '../models/product';
 
 @Component({
   selector: 'app-add-product',
-  imports: [FormsModule, RouterLink],
+  imports: [FormsModule],
   templateUrl: './add-product.html',
   styleUrl: './add-product.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
