@@ -18,7 +18,7 @@ export class ProductList {
   filteredProducts: ProductLists[] = [];
   total_qty = 0;
   total_price = 0;
-
+ 
   constructor(private productServices: ProductService) {
     this.productServices.getProduct().subscribe((data) => {
       // โค้ดในนี้จะทำงานเมื่อ "โหลดเสร็จ" เท่านั้น
