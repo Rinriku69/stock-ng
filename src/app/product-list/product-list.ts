@@ -16,29 +16,37 @@ export class ProductList {
   search_key = ''
   search_status: number | string = 'Show all results';
   filteredProducts: ProductLists[] = [];
+  total_qty = 0;
+  total_price = 0;
 
   constructor(private productServices: ProductService) {
-    this.products = this.productServices.getProduct();
-    this.filteredProducts = this.products
+    this.productServices.getProduct().subscribe((data) => {
+      // โค้ดในนี้จะทำงานเมื่อ "โหลดเสร็จ" เท่านั้น
+      this.products = data;
+      this.filteredProducts = data; // เอาของใส่ถังโชว์
+      this.recalculate_dashboard();           // คำนวณ Dashboard ใหม่
+      console.log('โหลดข้อมูลเสร็จแล้วจ้า!', data);
+    });
   }
   removeProduct(index: number) {
     this.productServices.removeProduct(index);
+    this.recalculate_dashboard()
   }
 
   load() {
-    this.products = this.productServices.loadProduct();
-    this.filteredProducts = this.products
+    this.productServices.loadProduct().subscribe((data) => {
+      this.products = data
+      this.filteredProducts = data
+      this.recalculate_dashboard()
+    });
   }
 
-  dashBoard() {
-    const TotalStock = {
-      qty: this.products.length,
-      total: this.products.reduce(
-        (result, initial) => {
-          return result + initial.price
-        }, 0),
-    }
-    return TotalStock
+  recalculate_dashboard() {
+    this.total_qty = this.products.length
+    this.total_price = this.products.reduce(
+      (result, initial) => {
+        return result + initial.price
+      }, 0);
   }
 
 
