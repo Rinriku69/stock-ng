@@ -1,25 +1,19 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-  </head>
-  <body>
-    <header>
-      <nav>
-        <a routerLink="/product-list" routerLinkActive="active-link" style="margin-right: 15px">
-          product📦
-        </a>
-        <a routerLink="/hello-world" style="margin-right: 15px"> Ohayo Sekai! 🌍 </a>
-        <a routerLink="/add-product" style="margin-right: 15px"> Add Product </a>
-      </nav>
-    </header>
+<header>
+  <nav>
+    <a routerLink="/product-list" routerLinkActive="active-link" style="margin-right: 15px">
+      Products 🖥️
+    </a>
+    <a routerLink="/hello-world" routerLinkActive="active-link" style="margin-right: 15px">
+      Ohayo Sekai! 🌍
+    </a>
+    <a routerLink="/add-product" routerLinkActive="active-link" style="margin-right: 15px">
+      Add Product 📦</a
+    >
+  </nav>
+</header>
 
-    <main>
-      <router-outlet />
-    </main>
+<main>
+  <router-outlet />
+</main>
 
-    <footer>Footer here</footer>
-  </body>
-</html>
+<footer>Footer here</footer>
