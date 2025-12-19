@@ -16,6 +16,7 @@ export class ProductList {
   search_key = ''
   search_status: number | string = 'Show all results';
   filteredProducts: ProductLists[] = [];
+
   constructor(private productServices: ProductService) {
     this.products = this.productServices.getProduct();
     this.filteredProducts = this.products
@@ -53,7 +54,6 @@ export class ProductList {
       this.products.forEach((p) => {
         if (p.name?.toLowerCase().includes(this.search_key.toLowerCase())) {
           found.push(p)
-
         }
       });
       if (found.length > 0) {

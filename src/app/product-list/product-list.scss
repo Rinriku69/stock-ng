@@ -1,0 +1,37 @@
+.product-card {
+  margin-top: 20px;
+  border: 1px solid #ddd;
+  padding: 10px;
+}
+.fa-trash-can {
+  font-size: 24px; /* Change size */
+  color: rgb(201, 26, 26); /* Change color */
+  padding: 0px; /* Add spacing */
+}
+
+.app-remove-btn {
+  padding-top: 5px;
+  background: none;
+  border: 0;
+}
+
+.app-load-product {
+  background-color: #a09d9d;
+  border-radius: 5px;
+  font-size: medium;
+  font-weight: bold;
+  color: rgb(4, 82, 27);
+  &:not(:disabled):hover {
+    background-color: rgb(194, 186, 186);
+  }
+  &:not(:disabled) {
+    background-color: #ddd;
+    color: rgb(6, 120, 40);
+  }
+}
+
+.is-out-stock {
+  text-decoration: line-through;
+  color: rgb(148, 9, 9);
+  font-weight: bold;
+}
