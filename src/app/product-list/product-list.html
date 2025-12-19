@@ -19,7 +19,13 @@
       </b>
       <div class="product-name" [class.is-out-stock]="product.qty === 0">{{ product.name }}</div>
       <div class="product-price">{{ product.price | number }} Baht</div>
-      <div class="product-qty">Quantity: {{ product.qty | number }}</div>
+      @if (product.qty === 0) {
+        <div class="product-qty">
+          Quantity: <span class="app-out-stock-text">Out of stock</span>
+        </div>
+      } @else {
+        <div class="product-qty">Quantity: {{ product.qty | number }}</div>
+      }
 
       <button type="button" (click)="removeProduct(i)" class="app-remove-btn">
         <i class="fa-solid fa-trash-can"></i>
