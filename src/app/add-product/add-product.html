@@ -1,16 +1,27 @@
 <div class="app-input-form">
   <label>
-    Product name
+    <span class="app-label-holder">Product name</span> <br />
     <input type="text" [(ngModel)]="product_name" /> </label
   ><br />
   <label>
-    Price
+    <span class="app-label-holder">Price</span> <br />
     <input type="number" [(ngModel)]="product_price" /> </label
   ><br />
   <label>
-    Quantity
+    <span class="app-label-holder">Quantity</span> <br />
     <input type="number" [(ngModel)]="product_qty" />
   </label>
-  <p>{{ product_name }}</p>
-  <button type="button" (click)="addProduct()" [disabled]="!product_name">Add</button>
+  <div class="product-card">
+    <div class="product_name">Name :{{ product_name }}</div>
+    <div class="product_price">Price :{{ product_price | number }} Baht</div>
+    <div class="product_qty">Quantity :{{ product_qty | number }}</div>
+  </div>
+
+  <button
+    type="button"
+    (click)="addProduct()"
+    [disabled]="product_price === 0 || !product_name || product_price === null"
+  >
+    Add
+  </button>
 </div>
