@@ -45,6 +45,7 @@ export class ProductService {
       { name: 'Mouse Pad', price: 300, qty: 10 },
       { name: 'Pad thai', price: 200, qty: 10 }
     ];
+    this.saveToStorage()
     return this.products
   }
 
