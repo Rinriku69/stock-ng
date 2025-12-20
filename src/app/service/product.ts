@@ -44,9 +44,6 @@ export class ProductService {
 
   }
 
-  /*  loadProduct() {
- 
-     return this.http.get<ProductLists[]>(this.product_api);
-   } */
+
 
 }
