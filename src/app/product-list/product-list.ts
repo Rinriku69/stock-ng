@@ -1,8 +1,9 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ProductService } from '../service/product'
 import { ProductLists } from '../models/product';
 import { FormsModule } from '@angular/forms';
+import { BehaviorSubject, combineLatest, Observable, map } from 'rxjs';
 
 @Component({
   selector: 'app-product-list',
@@ -12,48 +13,83 @@ import { FormsModule } from '@angular/forms';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProductList {
-  products: ProductLists[] = []
-  search_key = ''
-  search_status: number | string = 'Show all results';
-  filteredProducts: ProductLists[] = [];
-  total_qty = 0;
-  total_price = 0;
- 
+  // products: ProductLists[] = []
+  search_key$ = new BehaviorSubject<string>('');
+  search_status$!: Observable<string>;
+  products$!: Observable<ProductLists[]>;
+  // products$ = this.productServices.stock_product$
+  filteredProducts$!: Observable<ProductLists[]>;
+  dashboard$!: Observable<{ total_qty: number; total_price: number }>;
+  /* dashboard$ = this.filteredProducts$.pipe(
+    map(products => {
+
+      const total_qty = products.reduce(
+        (result, p) => result + p.qty, 0
+      );
+
+      const total_price = products.reduce(
+        (result, p) => result + p.price, 0
+      );
+
+      return { total_qty, total_price };
+    }) 
+  )*/
+  // products$ = this.productServices.stock_product$;
+
   constructor(private productServices: ProductService) {
-    this.productServices.getProduct().subscribe((data) => {
-      // โค้ดในนี้จะทำงานเมื่อ "โหลดเสร็จ" เท่านั้น
-      this.products = data;
-      this.filteredProducts = data; // เอาของใส่ถังโชว์
-      this.recalculate_dashboard();           // คำนวณ Dashboard ใหม่
-      console.log('โหลดข้อมูลเสร็จแล้วจ้า!', data);
-    });
-  }
-  removeProduct(index: number) {
-    this.productServices.removeProduct(index);
+    // this.products$ = this.productServices.getProduct()
+    this.productServices.getProduct();
+    this.products$ = this.productServices.stock_product$
+    this.filteredProducts$ = combineLatest([this.products$,
+    this.search_key$]).pipe(map(([products, key]: [ProductLists[], string]) =>
+      products.filter(p =>
+        p.name.toLowerCase().includes(key.toLowerCase())
+      )));
+
     this.recalculate_dashboard()
   }
 
-  load() {
-    this.productServices.loadProduct().subscribe((data) => {
-      this.products = data
-      this.filteredProducts = data
-      this.recalculate_dashboard()
-    });
+
+  removeProduct(index: number) {
+    this.productServices.removeProduct(index)
+    this.recalculate_dashboard()
   }
+
+  /* load() {
+
+    this.filteredProducts$ = this.products$
+    this.recalculate_dashboard()
+
+  } */
 
   recalculate_dashboard() {
-    this.total_qty = this.products.length
-    this.total_price = this.products.reduce(
-      (result, initial) => {
-        return result + initial.price
-      }, 0);
+    this.dashboard$ = this.filteredProducts$.pipe(
+      map(products => {
+
+        const total_qty = products.reduce(
+          (result, p) => result + p.qty, 0
+        );
+
+        const total_price = products.reduce(
+          (result, p) => result + p.price, 0
+        );
+
+        return { total_qty, total_price };
+      })
+    )
+
+    this.search_status$ = this.filteredProducts$.pipe(
+      map(products => {
+        return `${products.length} results found`
+      })
+    )
   }
 
 
-  products_list() {
+  /* onSearch() {
     if (
       this.search_key === ''
-
+  
     ) {
       this.search_status = 'Show all results'
       return this.filteredProducts = this.products
@@ -71,7 +107,14 @@ export class ProductList {
       }
       return found ? this.filteredProducts = found : this.products
     }
+    // this.search_key$.next(this);
+  
+  } */
+
+
+
+  onSearch(value: string) {
+    this.search_key$.next(value);
+
   }
-
-
 }
