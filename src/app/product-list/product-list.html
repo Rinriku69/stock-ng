@@ -1,17 +1,18 @@
 <h2>รายการสินค้าในสต็อก</h2>
-<button type="button" (click)="load()" [disabled]="products.length > 0" class="app-load-product">
-  Load Product
-</button>
+<button type="button" class="app-load-product">Load Product</button>
 <br />
-<h3>Total Product :{{ total_qty }} Total Price :{{ total_price }}{{ products }}</h3>
+@if (dashboard$ | async; as d) {
+  <h3>Total Product :{{ d.total_qty }} Total Price :{{ d.total_price }}</h3>
+}
+
 <!-- <app-add-product></app-add-product> -->
 <div class="product-list">
   <label
     >Search
-    <input type="text" [(ngModel)]="search_key" (keyup)="products_list()" />
+    <input type="text" (input)="onSearch($event.target.value)" />
   </label>
-  <p>{{ search_status }}</p>
-  @for (product of filteredProducts; track product.name; let i = $index) {
+  <p>{{ search_status$ | async }}</p>
+  @for (product of filteredProducts$ | async; track product.name; let i = $index) {
     <div class="product-card">
       <b
         >Product <span class="title-number">{{ i + 1 }}</span
