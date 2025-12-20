@@ -1,14 +1,15 @@
 import { Injectable } from '@angular/core';
 import { ProductLists } from '../models/product';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProductService {
   private product_api = '/products.json'
-  products: ProductLists[] = [];
+  private productState$ = new BehaviorSubject<ProductLists[]>([]);
+  stock_product$ = this.productState$.asObservable();
 
   constructor(private http: HttpClient) { };
 
@@ -23,24 +24,29 @@ export class ProductService {
     return data ? JSON.parse(data) : null
   } //.parse แปลงข้อความโง่ๆกลับมาเป็นarray/object เรียกว่า Deserialization
  */
-  getProduct(): Observable<ProductLists[]> {
-
-    return this.http.get<ProductLists[]>(this.product_api);
+  getProduct() {
+    this.http.get<ProductLists[]>(this.product_api)
+      .subscribe(data => {
+        this.productState$.next(data);
+      });
   }
 
   addProduct(product: ProductLists) {
-    this.products.push(product)
+    // this.products.push(product)
     // this.saveToStorage()
   }
 
   removeProduct(index: number) {
-    this.products.splice(index, 1)
-    // this.saveToStorage()
+    const current = this.productState$.value
+    const update = current.filter((_, i) => i !== index);
+
+    this.productState$.next(update)
+
   }
 
-  loadProduct() {
-
-    return this.http.get<ProductLists[]>(this.product_api);
-  }
+  /*  loadProduct() {
+ 
+     return this.http.get<ProductLists[]>(this.product_api);
+   } */
 
 }
