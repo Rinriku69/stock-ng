@@ -1,0 +1,7 @@
+[
+  { "name": "Gaming Mouse", "price": 1500, "qty": 10 },
+  { "name": "Mechanical Keyboard", "price": 3200, "qty": 5 },
+  { "name": "Monitor 24\"", "price": 4500, "qty": 2 },
+  { "name": "Mouse Pad", "price": 300, "qty": 20 },
+  { "name": "Pad thai", "price": 200, "qty": 220 }
+]

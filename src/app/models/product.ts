@@ -1,5 +1,5 @@
 export interface ProductLists {
-    name: string | undefined;
+    name: string;
     price: number;
     qty: number;
 }
