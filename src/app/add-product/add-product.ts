@@ -4,16 +4,18 @@ import { CommonModule } from '@angular/common';
 import { ProductService } from '../service/product'
 import { Router } from '@angular/router';
 import { ProductLists } from '../models/product';
+import { HelloWorld } from "../hello-world/hello-world";
 
 @Component({
   selector: 'app-add-product',
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule, HelloWorld],
   templateUrl: './add-product.html',
   styleUrl: './add-product.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AddProduct {
   constructor(private productServices: ProductService, private router: Router) { }
+
 
   product_name = '';
   product_price = 0;

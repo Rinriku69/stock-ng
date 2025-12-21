@@ -25,6 +25,9 @@ export class ProductService {
   } //.parse แปลงข้อความโง่ๆกลับมาเป็นarray/object เรียกว่า Deserialization
  */
   getProduct() {
+    if (this.productState$.value.length > 0) {
+      return;
+    }
     this.http.get<ProductLists[]>(this.product_api)
       .subscribe(data => {
         this.productState$.next(data);
@@ -32,15 +35,18 @@ export class ProductService {
   }
 
   addProduct(product: ProductLists) {
-    // this.products.push(product)
-    // this.saveToStorage()
+    const current = this.productState$.value
+    const updated = [...current, product]
+    console.log(updated)
+    this.productState$.next(updated)
+
   }
 
   removeProduct(index: number) {
     const current = this.productState$.value
-    const update = current.filter((_, i) => i !== index);
+    const updated = current.filter((_, i) => i !== index);
 
-    this.productState$.next(update)
+    this.productState$.next(updated)
 
   }
 
